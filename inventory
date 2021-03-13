@@ -1,6 +1,0 @@
-[servers]
-servera ansible_host=servera ansible_user=student ansible_ssh_private_key_file=/home/student/.ssh/kiosk/id_rsa
-serverb ansible_host=serverb ansible_user=student ansible_ssh_private_key_file=/home/student/.ssh/kiosk/id_rsa
-
-[servers:vars]
-ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p -q kiosk@kiosk"'
