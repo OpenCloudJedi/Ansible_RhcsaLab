@@ -34,14 +34,14 @@
           line: 140.82.113.4    github.com
           path: /etc/hosts
           state: present
-      - name: Gitclone for tails_servera.sh
+      - name: Gitclone for tails_serverb.sh
         git:
           repo: https://github.com/OpenCloudJedi/PeteTong.git
           dest: /home/student/Project
       - name: Move tails_servera.sh to /root/
-        command: mv /home/student/Project/tails_servera.sh /home/student/
+        command: mv /home/student/Project/tails_serverb.sh /home/student/
       - name: Add executable permissions to the tails file    
-        command: chmod +x /home/student/tails_servera.sh
+        command: chmod +x /home/student/tails_serverb.sh
       - name: Remove git clone folder
         file:
           path: /home/student/Project
@@ -118,7 +118,7 @@
         state: present
         path: /etc/default/grub
     - name: Update grub timeout
-      command: grub2-mkconfig > /boot/grub2/grub.cfg
+      shell: grub2-mkconfig > /boot/grub2/grub.cfg
     - name: Add our VG and swap to /etc/fstab
       blockinfile:
         path: /etc/fstab
