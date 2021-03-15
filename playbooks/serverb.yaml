@@ -11,6 +11,7 @@
       loop:
         - git
         - expect
+        - autofs
     - name: Get register to check if tails_servera.sh already exists in case you have to run this again
       stat:
         path: /home/student/tails_serverb.sh
@@ -63,10 +64,6 @@
       file:
         path: "{{ existingmountpoint }}"
         state: directory
-    - name: Install autofs
-      yum:
-        name: autofs
-        state: installed
     - name: Change tuned profiles to something else pt1
       copy:
         content: throughput-performance
