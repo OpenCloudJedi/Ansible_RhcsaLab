@@ -12,20 +12,22 @@
         - git
         - expect
         - autofs
-    - name: Get register to check if tails_servera.sh already exists in case you have to run this again
+    - name: Get register to check if "{{ gradescript }}" already exists in case you have to run this again
       stat:
-        path: /home/student/tails_serverb.sh
+        path: /home/student/{{ gradescript }}
       register: istails
-    - name: Git clone for tails_serverb.sh
+    - name: Git clone for "{{ gradescript }}"
       block:
-      - name: Gitclone for tails_serverb.sh
+      - name: Gitclone for "{{ gradescript }}"
         git:
           repo: https://github.com/OpenCloudJedi/PeteTong.git
           dest: /home/student/Project
-      - name: Move tails_serverb.sh to /root/
-        command: mv /home/student/Project/tails_serverb.sh /home/student/
+      - name: Move {{ gradescript }} to /root/
+        command: mv /home/student/Project/{{ gradescript }} /home/student/
       - name: Add executable permissions to the tails file    
-        command: chmod +x /home/student/tails_serverb.sh
+        file: 
+          path: /home/student/{{ gradescript }}
+          mode: +x
       - name: Remove git clone folder
         file:
           path: /home/student/Project
@@ -38,15 +40,15 @@
           line: 140.82.113.4    github.com
           path: /etc/hosts
           state: present
-      - name: Gitclone for tails_serverb.sh
+      - name: Gitclone for "{{ gradescript }}"
         git:
           repo: https://github.com/OpenCloudJedi/PeteTong.git
           dest: /home/student/Project
-      - name: Move tails_servera.sh to /root/
-        command: mv /home/student/Project/tails_serverb.sh /home/student/
+      - name: Move "{{ gradescript }}" to /root/
+        command: mv /home/student/Project/{{ gradescript }} /home/student/
       - name: Add executable permissions to the tails file    
         file: 
-          path: /home/student/tails_serverb.sh
+          path: /home/student/{{ gradescript }}
           mode: +x
       - name: Remove git clone folder
         file:
@@ -140,5 +142,3 @@
       async: 4
       poll: 1
       ignore_errors: yes
-
-
