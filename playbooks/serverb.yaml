@@ -71,10 +71,11 @@
     - name: Change tuned profiles to something else pt1
       copy:
         content: throughput-performance
-        dest: "{{ item }}"
-      loop:
-        - /etc/tuned/active_profile
-        - /etc/tuned/profile_mode
+        dest: /etc/tuned/active_profile
+    - name:
+      copy:
+        content: manual
+        dest: /etc/tuned/profile_mode
     - name: Parted 2 partitions 1st
       parted:
         device: /dev/vdb
