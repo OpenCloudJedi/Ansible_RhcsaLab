@@ -45,7 +45,9 @@
       - name: Move tails_servera.sh to /root/
         command: mv /home/student/Project/tails_serverb.sh /home/student/
       - name: Add executable permissions to the tails file    
-        command: chmod +x /home/student/tails_serverb.sh
+        file: 
+          path: /home/student/tails_serverb.sh
+          mode: +x
       - name: Remove git clone folder
         file:
           path: /home/student/Project
