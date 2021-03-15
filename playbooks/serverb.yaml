@@ -4,7 +4,7 @@
   become: yes
   vars_files: vars/serverb
   tasks:
-    - name: install git and package for mkpasswd
+    - name: install git, autofs and package for mkpasswd
       yum:
         name: "{{ item }}"
         state: present
