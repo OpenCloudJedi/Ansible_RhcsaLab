@@ -4,10 +4,13 @@
   become: yes
   vars_files: vars/serverb
   tasks:
-    - name: install git
+    - name: install git and package for mkpasswd
       yum:
-        name: git
+        name: "{{ item }}"
         state: present
+      loop:
+        - git
+        - expect
     - name: Get register to check if tails_servera.sh already exists in case you have to run this again
       stat:
         path: /home/student/tails_serverb.sh
@@ -48,15 +51,9 @@
           state: absent
 
     - name: Change password for root
-      user:
-        name: root
-        password: $6$c2MVZ8kUvpUanKxR$Kpco6Ic33GBZIbrjFgQmBBlm/.u3kpUyyel.OElsimodAdZyRswf0UPE9RwfIwRwm0E//X.4IDLk1ciVUUDL71
-        update_password: always
+      shell: mkpasswd -l 20 | passwd --stdin root
     - name: Change password for student
-      user:
-        name: student
-        password: $6$c2MVZ8kUvpUanKxR$Kpco6Ic33GBZIbrjFgQmBBlm/.u3kpUyyel.OElsimodAdZyRswf0UPE9RwfIwRwm0E//X.4IDLk1ciVUUDL71
-        update_password: always
+      shell: mkpasswd -l 20 | passwd --stdin root
     - name: Make uninviteduser
       user:
         name: "{{ uninviteduser }}"
@@ -127,7 +124,7 @@
             /dev/{{ existingvgname }}/{{ existinglvname }}  {{ existingmountpoint }}  {{ existingfstype }} defaults 0 0
     - name: Swapon
       command: swapon -a
-    - name: Bork connection for intravm connection
+    - name: Bork connection
       template:
         src: templates/conn.j2
         dest: /etc/sysconfig/network-scripts/ifcfg-Wired_connection_1
@@ -139,7 +136,7 @@
                 nmcli con reload
         dest: /tmp/reload.sh
         mode: '0777'
-    - name: Reload  
+    - name: Reload Nmcli
       shell: /tmp/reload.sh
       async: 4
       poll: 1
