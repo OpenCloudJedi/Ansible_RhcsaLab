@@ -1,5 +1,5 @@
 gradescript: tails_serverb.sh
-vdb_partsize: 256MiB
+sdb_partsize: 256MiB
 uninviteduser: uninviteduser
 existingmountpoint: /Imminent/
 existingvgname: Plot
